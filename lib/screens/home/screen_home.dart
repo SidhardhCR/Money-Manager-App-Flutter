@@ -19,6 +19,7 @@ class ScreenHome extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       body: SafeArea(child: ValueListenableBuilder(
         valueListenable:selectedIndex ,
         builder: (BuildContext ctx, int updatedIndex, Widget? _){
