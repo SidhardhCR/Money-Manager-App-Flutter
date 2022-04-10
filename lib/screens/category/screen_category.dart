@@ -5,6 +5,6 @@ class ScreenCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Screen Category');
+    return Text('Screen Category',);
   }
 }
