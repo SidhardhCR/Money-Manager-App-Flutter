@@ -6,7 +6,10 @@ class ScreenHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(icon: Icon(Icons.home),label: 'transaction'),
+        BottomNavigationBarItem(icon: Icon(Icons.category)),
+         ]),
     );
   }
 }
