@@ -3,9 +3,9 @@ part 'category_dbmodel.g.dart';
 
 @HiveType(typeId: 2)
 enum CategoryType{
-  @HiveField(1)
+  @HiveField(0)
     income,
-    @HiveField(2)
+    @HiveField(1)
     expense
 
 }
@@ -14,11 +14,11 @@ enum CategoryType{
 
 @HiveType(typeId: 1)
 class CategoryModel{
-      @HiveField(1)
+      @HiveField(0)
       final String name;
       @HiveField(3)
       final bool isDeleted;
-      @HiveField(2)
+      @HiveField(1)
       final CategoryType type;
 
   CategoryModel({required this.name, this.isDeleted = false,required this.type});

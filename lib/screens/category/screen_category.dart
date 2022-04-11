@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
 import 'package:money_manager_app/screens/category/expense_category_list.dart';
 import 'package:money_manager_app/screens/category/income_category_list.dart';
 
@@ -15,6 +16,9 @@ class _ScreenCategoryState extends State<ScreenCategory> with SingleTickerProvid
   
   @override
   void initState() {
+     CategoryDB().getCategory().then((value){
+       print(value);
+     });
     _tabController = TabController(length: 2, vsync: this);
   }
 

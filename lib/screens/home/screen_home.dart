@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager_app/screens/category/category_add_popup.dart';
 import 'package:money_manager_app/screens/category/screen_category.dart';
 import 'package:money_manager_app/screens/transaction/screen_transaction.dart';
 
@@ -32,7 +33,10 @@ class ScreenHome extends StatelessWidget {
                 print('transaction added');
             }
             else{
+              CategoryAddPopup(context);
               print('category added');
+                
+
             }
       },
       child: Icon(Icons.add),

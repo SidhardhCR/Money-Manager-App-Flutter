@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:money_manager_app/model/category/category_dbmodel.dart';
 
 const CategoryDB_Name = 'categaory_db';
+
+
 
 abstract class CategoryDBFunction{
     Future<List<CategoryModel>> getCategory();
@@ -10,9 +13,12 @@ abstract class CategoryDBFunction{
 }
 
 class CategoryDB implements CategoryDBFunction{
+  
   @override
   Future<void>  insertCategory(CategoryModel value)async{
        final _categoryDB = await Hive.openBox<CategoryModel>(CategoryDB_Name);
+         
+        
 
        await _categoryDB.add(value);
   }
