@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
 import 'package:money_manager_app/screens/home/screen_home.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  categoryModelAdapterRegister();
+  categoryTypeAdapterRegister();
   runApp(const MyApp());
 }
 
