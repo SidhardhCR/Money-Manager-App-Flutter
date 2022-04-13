@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
+
+import '../../model/category/category_dbmodel.dart';
 
 class IncomeCategoryList extends StatelessWidget {
   const IncomeCategoryList({ Key? key }) : super(key: key);
@@ -7,18 +10,29 @@ class IncomeCategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return ValueListenableBuilder(
+      valueListenable: CategoryDB().incomeListNotifier, 
+      builder: (BuildContext ctx, List<CategoryModel> newList, Widget?_){
+          return ListView.separated(
       itemBuilder: (ctx,index){
-        return ListTile(
-          title: Text('Income Category $index'),
-          trailing: IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+        final _category = newList[index];
+        return Card(
+          margin: EdgeInsets.all(4.0),
+          child: ListTile(
+            title: Text(_category.name),
+            trailing: IconButton(onPressed: (){
+              CategoryDB.instance.deleteCategory(_category.id);
+            }, icon: Icon(Icons.delete, color:Colors.red)),
+          ),
         );
       },
       separatorBuilder: (ctx,index){
         return SizedBox(height: 10,);
       },
-      itemCount: 20,
+      itemCount: newList.length,
       
     );
+      });
+
   }
 }

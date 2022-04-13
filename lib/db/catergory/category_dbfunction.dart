@@ -10,9 +10,23 @@ abstract class CategoryDBFunction{
     Future<List<CategoryModel>> getCategory();
 
     Future<void>  insertCategory(CategoryModel value);
+
+    Future<void> deleteCategory(String CategoryID);
 }
 
 class CategoryDB implements CategoryDBFunction{
+
+  ValueNotifier<List<CategoryModel>> incomeListNotifier = ValueNotifier([]);
+   ValueNotifier<List<CategoryModel>> expenseListNotifier = ValueNotifier([]);
+
+    CategoryDB.internal();
+
+    static CategoryDB instance = CategoryDB.internal();
+
+    factory CategoryDB(){
+        return instance;
+    }
+  
   
   @override
   Future<void>  insertCategory(CategoryModel value)async{
@@ -20,7 +34,7 @@ class CategoryDB implements CategoryDBFunction{
          
         
 
-       await _categoryDB.add(value);
+       await _categoryDB.put(value.id,value);
   }
 
   @override
@@ -30,6 +44,28 @@ class CategoryDB implements CategoryDBFunction{
           return _categoryDB.values.toList();
   }
 
+    Future<void> refreshUI()async{
+      final _allCategory = await getCategory();
+      incomeListNotifier.value.clear();
+      expenseListNotifier.value.clear();
+     await Future.forEach(_allCategory, (CategoryModel category){
+
+            if(category.type == CategoryType.income){
+                    incomeListNotifier.value.add(category);
+            }
+            else{expenseListNotifier.value.add(category);}
+      });
+      incomeListNotifier.notifyListeners();
+      expenseListNotifier.notifyListeners();
+    }
+
+  @override
+  Future<void> deleteCategory(String CategoryID)async{
+      final _categoryDB = await Hive.openBox<CategoryModel>(CategoryDB_Name);
+      _categoryDB.delete(CategoryID);
+      refreshUI();
+
+  }
  
 }
 
@@ -44,3 +80,4 @@ Future<void> categoryTypeAdapterRegister() async{
               Hive.registerAdapter(CategoryTypeAdapter());
         }
 }
+

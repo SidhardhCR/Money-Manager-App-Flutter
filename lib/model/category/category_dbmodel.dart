@@ -15,12 +15,14 @@ enum CategoryType{
 @HiveType(typeId: 1)
 class CategoryModel{
       @HiveField(0)
+      final String id;
+      @HiveField(1)
       final String name;
       @HiveField(3)
       final bool isDeleted;
-      @HiveField(1)
+      @HiveField(2)
       final CategoryType type;
 
-  CategoryModel({required this.name, this.isDeleted = false,required this.type});
+  CategoryModel({required this.id,required this.name, this.isDeleted = false,required this.type});
 
 }

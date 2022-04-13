@@ -16,9 +16,7 @@ class _ScreenCategoryState extends State<ScreenCategory> with SingleTickerProvid
   
   @override
   void initState() {
-     CategoryDB().getCategory().then((value){
-       print(value);
-     });
+     CategoryDB().refreshUI();
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -33,7 +31,7 @@ class _ScreenCategoryState extends State<ScreenCategory> with SingleTickerProvid
             controller: _tabController,
             tabs: [
             Tab(text: 'INCOME',),
-            Tab(text: 'EXPENCE',)
+            Tab(text: 'EXPENSE',)
           ]),
           Expanded(
             child: TabBarView(

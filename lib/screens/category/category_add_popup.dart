@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
 import 'package:money_manager_app/model/category/category_dbmodel.dart';
 
    ValueNotifier<CategoryType> selectedType = ValueNotifier(CategoryType.income);
@@ -31,13 +32,25 @@ Future<void> CategoryAddPopup(BuildContext context) async{
             ),
 
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(onPressed: (){
 
-                  CategoryModel(name: _catogeryController.text, type: selectedType.value);
-                print(_catogeryController.text);
-            
-              }, child: Text('Add')),
+                 final _name = _catogeryController.text;
+                 if(_name.isEmpty){
+                   return;
+                 }
+                 final _type = selectedType.value;
+                
+
+               final _category = CategoryModel(id: DateTime.now().millisecondsSinceEpoch.toString(), name: _name, type: _type)  ;
+
+                    CategoryDB().insertCategory(_category);
+
+                    CategoryDB().refreshUI();
+
+                    Navigator.of(ctx).pop();
+                    
+              }, child: const Text('Add')),
             ),
           ],
         );
