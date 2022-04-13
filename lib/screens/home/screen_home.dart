@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager_app/screens/category/category_add_popup.dart';
 import 'package:money_manager_app/screens/category/screen_category.dart';
+import 'package:money_manager_app/screens/transaction/add_trancation_screen/add_transaction.dart';
 import 'package:money_manager_app/screens/transaction/screen_transaction.dart';
 
 import 'widgets/bottom_navigationbar.dart';
@@ -30,6 +31,7 @@ class ScreenHome extends StatelessWidget {
       bottomNavigationBar: MoneyManagerBottomNavigationBar(),
       floatingActionButton: FloatingActionButton(onPressed: (){
             if(selectedIndex.value==0){
+              Navigator.of(context).pushNamed(AddTransactionScreen.routname);
                 print('transaction added');
             }
             else{

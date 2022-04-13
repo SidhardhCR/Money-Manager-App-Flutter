@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
 import 'package:money_manager_app/screens/home/screen_home.dart';
+import 'package:money_manager_app/screens/transaction/add_trancation_screen/add_transaction.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
       home: ScreenHome(),
+      routes:{
+        AddTransactionScreen.routname:(ctx)=> AddTransactionScreen()
+      },
     );
   }
 }
