@@ -14,7 +14,7 @@ Future<void> CategoryAddPopup(BuildContext context) async{
           title: const Text('Add Category'),
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextFormField(decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Category'

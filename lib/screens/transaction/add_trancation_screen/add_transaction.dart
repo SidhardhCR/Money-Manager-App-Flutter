@@ -16,6 +16,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   CategoryType? _selectedCategoryType;
   CategoryModel? _selcetedCategoryModel;
 
+  String? _categoryId;
+
+  @override
+  void initState() {
+    _selectedCategoryType = CategoryType.income;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,30 +67,45 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     children: [
                       Radio(
                         value: CategoryType.income, 
-                        groupValue: CategoryType.income, 
+                        groupValue: _selectedCategoryType, 
                         onChanged: (newValue){
-                            
+                            setState(() {
+                              _selectedCategoryType = CategoryType.income;
+                              _categoryId = null;
+                            });
+
                       }),
                       Text('Income')
                     ],
                   ),
                   Row(
                     children: [
-                      Radio(value: CategoryType.expense, groupValue: CategoryType.income, onChanged: (newValue){
-
+                      Radio(
+                        value: CategoryType.expense, 
+                        groupValue: _selectedCategoryType, 
+                        onChanged: (newValue){
+                              setState(() {
+                                _selectedCategoryType = CategoryType.expense;
+                                _categoryId = null;
+                              });
                       }),
                       Text('Expense')
                     ],
                   ),
                 ],
               ),
-              DropdownButton(
+              DropdownButton<String>(
                 hint: Text('Select Category'),
-                items: CategoryDB.instance.incomeListNotifier.value.map((e){
+                value: _categoryId,
+                items: (_selectedCategoryType == CategoryType.income ? CategoryDB.instance.incomeListNotifier : CategoryDB.instance.expenseListNotifier).value.map((e){
                 return DropdownMenuItem(
                   value: e.id,
                   child: Text(e.name));
-              }).toList(), onChanged: (selectedValue){
+              }).toList(), 
+              onChanged: (selectedValue){
+                    setState(() {
+                      _categoryId = selectedValue;
+                    });
                 print(selectedValue);
               }),
               ElevatedButton(onPressed: (){

@@ -12,10 +12,13 @@ class ScreenHome extends StatelessWidget {
 
   static ValueNotifier<int> selectedIndex = ValueNotifier(0);
 
+
   final _page = [
       ScreenTransaction(),
       ScreenCategory(),
   ];
+
+  
 
   @override
   Widget build(BuildContext context) {
