@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
+import 'package:money_manager_app/db/transaction/transaction_db_functions.dart';
+import 'package:money_manager_app/model/Transaction/transaction_db_model.dart';
 import 'package:money_manager_app/model/category/category_dbmodel.dart';
 
 class AddTransactionScreen extends StatefulWidget {
@@ -18,6 +20,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   String? _categoryId;
 
+  final _purposeTextEditingController = TextEditingController();
+  final _amountTextEditingController = TextEditingController();
+
   @override
   void initState() {
     _selectedCategoryType = CategoryType.income;
@@ -34,10 +39,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           child: Column(
             children: [
               TextFormField(
+                controller: _purposeTextEditingController,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(hintText: 'Purpose'),
               ),
               TextFormField(
+                controller: _amountTextEditingController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(hintText: 'Amount'),),
 
@@ -89,7 +96,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                                 _categoryId = null;
                               });
                       }),
-                      Text('Expense')
+                      const Text('Expense')
                     ],
                   ),
                 ],
@@ -100,16 +107,22 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 items: (_selectedCategoryType == CategoryType.income ? CategoryDB.instance.incomeListNotifier : CategoryDB.instance.expenseListNotifier).value.map((e){
                 return DropdownMenuItem(
                   value: e.id,
-                  child: Text(e.name));
+                  child: Text(e.name),
+                  onTap: (){
+                    _selcetedCategoryModel = e;
+                  },
+                  );
+                  
               }).toList(), 
               onChanged: (selectedValue){
                     setState(() {
                       _categoryId = selectedValue;
                     });
-                print(selectedValue);
+                
               }),
               ElevatedButton(onPressed: (){
 
+                    insertTransaction();
               }, 
               child: Text('Submit'))
             ],
@@ -117,5 +130,40 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
         )
         ),
     );
+  }
+  Future<void> insertTransaction() async{
+    final _purposeText = _purposeTextEditingController.text;
+    final _amountText = _amountTextEditingController.text;
+    
+    if(_purposeText.isEmpty){
+      return;
+    }
+
+    if(_amountText.isEmpty){
+      return;
+    }
+    if(_selectedDate == null){
+      return;
+    }
+    if(_selectedCategoryType == null){
+      return;
+    }
+    if(_categoryId == null){
+      return;
+    }
+
+       final _parsedAmount = double.tryParse(_amountText);
+       if(_parsedAmount == null){
+         return;
+       }
+      final model = TransactionModel(
+           id: DateTime.now().millisecondsSinceEpoch.toString(),
+           purpose: _purposeText,
+           amount: _parsedAmount, 
+           date: _selectedDate!, 
+           type: _selectedCategoryType!,
+           category: _selcetedCategoryModel!,);
+
+           TransactionDB.instance.addTransaction(model);
   }
 }

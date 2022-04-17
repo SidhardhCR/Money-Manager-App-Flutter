@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
+import 'package:money_manager_app/db/transaction/transaction_db_functions.dart';
 import 'package:money_manager_app/screens/home/screen_home.dart';
 import 'package:money_manager_app/screens/transaction/add_trancation_screen/add_transaction.dart';
 
@@ -9,6 +10,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   categoryModelAdapterRegister();
   categoryTypeAdapterRegister();
+  transactionModelAdapterRegister();
   runApp(const MyApp());
 }
 
