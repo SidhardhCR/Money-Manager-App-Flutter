@@ -123,11 +123,16 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 }),
             ElevatedButton(
                 onPressed: () {
-                 insertTransaction();
-                 
-                  
+                  insertTransaction();
                 },
-                child: Text('Submit'))
+                child: Text('Submit')),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Text(
+                '*add catagory before transaction',
+                style: TextStyle(color: Colors.red),
+              ),
+            )
           ],
         ),
       )),
@@ -168,8 +173,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       category: _selcetedCategoryModel!,
     );
 
-   await TransactionDB.instance.addTransaction(model);
-   Navigator.of(context).pop();
+    await TransactionDB.instance.addTransaction(model);
+    Navigator.of(context).pop();
     TransactionDB.instance.refreshUI();
   }
 }

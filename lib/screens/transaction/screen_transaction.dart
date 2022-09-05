@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:money_manager_app/db/transaction/transaction_db_functions.dart';
 import 'package:money_manager_app/model/category/category_dbmodel.dart';
@@ -17,21 +18,42 @@ class ScreenTransaction extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: TransactionDB.instance.transactionNotifier,
       builder: (BuildContext ctx, List<TransactionModel> newlist, Widget? _) {
+        if (TransactionDB.instance.transactionNotifier.value.isEmpty) {
+          return Center(child: Text('No transaction '));
+        }
         return ListView.separated(
             padding: EdgeInsets.all(5),
             itemBuilder: (ctx, index) {
               final _value = newlist[index];
-              return Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    child: Text(parsedDate(_value.date)),
-                    radius: 50,
-                    backgroundColor: _value.type == CategoryType.income
-                        ? Colors.green
-                        : Colors.red,
+              return Slidable(
+                key: Key(_value.id),
+                startActionPane: ActionPane(motion: ScrollMotion(), children: [
+                  SlidableAction(
+                    onPressed: ((context) =>
+                        TransactionDB.instance.deletTransaction(_value.id)),
+                    icon: Icons.delete,
+                    backgroundColor: Colors.red,
+                  )
+                ]),
+                child: Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Text(parsedDate(_value.date)),
+                      radius: 50,
+                      backgroundColor: _value.type == CategoryType.income
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                    title: Text('Rs ${_value.amount}'),
+                    subtitle: Text(_value.category.name),
+                    trailing: Padding(
+                      padding: EdgeInsets.only(top: 42),
+                      child: Text(
+                        'Swipe to delete ->',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ),
                   ),
-                  title: Text('Rs ${_value.amount}'),
-                  subtitle: Text(_value.category.name),
                 ),
               );
             },
