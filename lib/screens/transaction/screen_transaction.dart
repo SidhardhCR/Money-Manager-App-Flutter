@@ -44,7 +44,7 @@ class ScreenTransaction extends StatelessWidget {
                           ? Colors.green
                           : Colors.red,
                     ),
-                    title: Text('Rs ${_value.amount}'),
+                    title: Text('${_value.purpose} \n Rs ${_value.amount}'),
                     subtitle: Text(_value.category.name),
                     trailing: Padding(
                       padding: EdgeInsets.only(top: 42),

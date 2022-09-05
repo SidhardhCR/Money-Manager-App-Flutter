@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_manager_app/db/catergory/category_dbfunction.dart';
@@ -24,7 +25,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.yellow,
       ),
-      home: ScreenHome(),
+      home: AnimatedSplashScreen(
+          splash: Icons.security_rounded,
+          backgroundColor: Colors.yellow,
+          duration: 1500,
+          nextScreen: ScreenHome()),
       routes: {AddTransactionScreen.routname: (ctx) => AddTransactionScreen()},
     );
   }

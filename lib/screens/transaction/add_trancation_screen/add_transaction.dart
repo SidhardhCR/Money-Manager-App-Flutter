@@ -138,6 +138,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       )),
     );
   }
+  
 
   Future<void> insertTransaction() async {
     final _purposeText = _purposeTextEditingController.text;
