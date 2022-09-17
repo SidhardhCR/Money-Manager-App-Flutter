@@ -12,7 +12,7 @@ class IncomeCategoryList extends StatelessWidget {
         valueListenable: CategoryDB().incomeListNotifier,
         builder: (BuildContext ctx, List<CategoryModel> newList, Widget? _) {
           if (CategoryDB.instance.incomeListNotifier.value.isEmpty) {
-            return Center(child: Text('Add some category'));
+            return Center(child: Text('Add some category',style: TextStyle(color: Colors.grey)));
           }
           return ListView.separated(
             itemBuilder: (ctx, index) {

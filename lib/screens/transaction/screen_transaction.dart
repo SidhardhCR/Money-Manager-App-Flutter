@@ -19,7 +19,11 @@ class ScreenTransaction extends StatelessWidget {
       valueListenable: TransactionDB.instance.transactionNotifier,
       builder: (BuildContext ctx, List<TransactionModel> newlist, Widget? _) {
         if (TransactionDB.instance.transactionNotifier.value.isEmpty) {
-          return Center(child: Text('No transaction '));
+          return Center(
+              child: Text(
+            'No transaction ',
+            style: TextStyle(color: Colors.grey),
+          ));
         }
         return ListView.separated(
             padding: EdgeInsets.all(5),

@@ -43,7 +43,7 @@ class ScreenHome extends StatelessWidget {
       ),
       appBar: AppBar(
         title: Text(
-          'Money Manager',
+          'Money Trackey',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
